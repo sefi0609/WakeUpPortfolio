@@ -1,5 +1,5 @@
+import time
 import argparse
-from os import getenv
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
@@ -41,11 +41,17 @@ def main(email: str, password: str) -> None:
         username_field.send_keys(email)
         password_field.send_keys(password)
 
+        # simulate a user interaction
+        time.sleep(1)
+
         recaptcha_iframe = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//iframe[@title="reCAPTCHA"]'))
         )
 
         solver.click_recaptcha_v2(iframe=recaptcha_iframe)
+
+        # simulate a user interaction
+        time.sleep(1)
 
         # Optionally, if CAPTCHA is solved, submit the form (or click login button)
         login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
@@ -64,8 +70,8 @@ def main(email: str, password: str) -> None:
         driver.quit()
 
 if __name__ == '__main__':
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument('--email', help='Enter your email address')
-    # parser.add_argument('--pass', help='Enter your password')
-    # args = parser.parse_args()
-    main(getenv('avidan_email'), getenv('avidan_pass'))
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--email', help='Enter your email address')
+    parser.add_argument('--pass', help='Enter your password')
+    args = parser.parse_args()
+    main(args[0], args[1])
