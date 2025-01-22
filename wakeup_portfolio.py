@@ -1,4 +1,4 @@
-import time
+from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service
@@ -17,49 +17,21 @@ driver = webdriver.Edge(service=Service(EdgeChromiumDriverManager().install()), 
 # Navigate to the URL
 driver.get('https://protfolio-yosefi-kroytoro.streamlit.app/')
 
-try:
-    # Wait for the page to load completely
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+# open file to write not append to save up space
+log_file = open('logs.txt', 'w')
 
-    # Find and click the "Authentication via credentials" <div> element
-    auth_button = driver.find_element(By.XPATH, '//div[contains(text(), "Authentication via credentials")]')
+try:
+    # Wait for the button to load completely
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//button [contains(text(), "Yes, get this app back up!")]')))
+
+    # Find and click the button to wake up the app
+    auth_button = driver.find_element(By.XPATH, '//button [contains(text(), "Yes, get this app back up!")]')
     auth_button.click()
 
-    # Wait for the login form (username and password fields) to appear
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, "username")))
-
-    # Find the username and password input fields
-    username_field = driver.find_element(By.NAME, "username")
-    password_field = driver.find_element(By.NAME, "password")
-
-    # Enter your login credentials (replace with actual credentials)
-    username_field.send_keys(email)
-    password_field.send_keys(password)
-
-    # simulate a user interaction
-    time.sleep(1)
-
-    recaptcha_iframe = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, '//iframe[@title="reCAPTCHA"]'))
-    )
-
-    solver.click_recaptcha_v2(iframe=recaptcha_iframe)
-
-    # simulate a user interaction
-    time.sleep(1)
-
-    # Optionally, if CAPTCHA is solved, submit the form (or click login button)
-    login_button = driver.find_element(By.XPATH, "//button[@type='submit']")
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    login_button.click()
-
-    # Wait until the page has loaded after the form submission
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
-
-    # Print the page source after successful login
-    print(driver.page_source)
+    log_file.write(f"{datetime.now()} - Button clicked successfully!")
 
 except Exception as e:
-    print(e)
+    log_file.write(f"{datetime.now()} - An error occurred: {e}")
 finally:
     driver.quit()
+    log_file.close()
