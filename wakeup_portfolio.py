@@ -6,14 +6,14 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def wake_up_streamlit_app() -> bool:
-    options = webdriver.EdgeOptions()
+    options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')  # Disable GPU acceleration
     options.add_argument('--no-sandbox')  # Bypass OS security model (needed for Docker)
     options.add_argument('--disable-dev-shm-usage')  # Overcome limited resources in containers
     options.add_argument('--user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"')
 
-    driver = webdriver.Edge(options=options)
+    driver = webdriver.Chrome(options=options)
 
     driver.get('https://protfolio-yosefi-kroytoro.streamlit.app/')
 

@@ -7,6 +7,7 @@ RUN apk add --no-cache \
     chromium-chromedriver \
     xvfb
 
+RUN python -m pip install --upgrade pip
 RUN pip install --no-cache-dir selenium
 
 COPY wakeup_portfolio.py /app/wakeup_portfolio.py
