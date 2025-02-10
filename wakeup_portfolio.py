@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def wake_up_streamlit_app() -> bool:
+def wake_up_streamlit_app(url: str) -> bool:
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')  # Disable GPU acceleration
@@ -15,7 +15,7 @@ def wake_up_streamlit_app() -> bool:
 
     driver = webdriver.Chrome(options=options)
 
-    driver.get('https://protfolio-yosefi-kroytoro.streamlit.app/')
+    driver.get(url)
 
     with open('logs.log', 'a') as log_file:
         try:
@@ -38,7 +38,7 @@ def wake_up_streamlit_app() -> bool:
 
 
 if __name__ == "__main__":
-    ref = wake_up_streamlit_app()
+    ref = wake_up_streamlit_app('https://protfolio-yosefi-kroytoro.streamlit.app/')
     if ref:
         print('The Streamlit application is waking up...')
     else:
