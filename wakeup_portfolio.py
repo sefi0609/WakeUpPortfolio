@@ -1,3 +1,4 @@
+import argparse
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -30,6 +31,9 @@ def wake_up_streamlit_app(url: str) -> str:
             auth_button = driver.find_element(By.XPATH, '//button [contains(text(), "Yes, get this app back up!")]')
             auth_button.click()
 
+            # Simulate a user interaction
+            WebDriverWait(driver, 10)
+
             log_file.write(f"{datetime.now()} - Waking up Streamlit application...\n")
             return 'WakingUpStreamlitApp'
 
@@ -42,7 +46,11 @@ def wake_up_streamlit_app(url: str) -> str:
 
 
 if __name__ == "__main__":
-    ref = wake_up_streamlit_app('https://protfolio-yosefi-kroytoro.streamlit.app/')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--url', help='URL for the streamlit application')
+    args = parser.parse_args()
+
+    ref = wake_up_streamlit_app(args.url)
 
     match ref:
         case 'NotAStreamlitApp':
