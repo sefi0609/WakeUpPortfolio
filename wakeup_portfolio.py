@@ -1,4 +1,5 @@
 import argparse
+from time import sleep
 from datetime import datetime
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -32,7 +33,7 @@ def wake_up_streamlit_app(url: str) -> str:
             auth_button.click()
 
             # Simulate a user interaction
-            WebDriverWait(driver, 10)
+            sleep(10)
 
             log_file.write(f"{datetime.now()} - Waking up Streamlit application...\n")
             return 'WakingUpStreamlitApp'
