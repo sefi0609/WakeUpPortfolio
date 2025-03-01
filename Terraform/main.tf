@@ -32,7 +32,7 @@ resource "aws_ecr_lifecycle_policy" "repository-lifecycle-police" {
 }
 
 resource "aws_ecs_cluster" "wake-up-streamlit" {
-  name = "wake-up-streamlit"
+  name = var.cluster_name
 
   setting {
     name  = "containerInsights"
@@ -41,7 +41,7 @@ resource "aws_ecs_cluster" "wake-up-streamlit" {
 }
 
 resource "aws_ecs_task_definition" "service" {
-  family                   = "wakeup-task"
+  family                   = var.cluster_name
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 512
@@ -51,15 +51,24 @@ resource "aws_ecs_task_definition" "service" {
     {
       name      = "wakeup"
       image     = "340752809566.dkr.ecr.us-east-1.amazonaws.com/automations:latest"
-      cpu       = 512
-      memory    = 1024
       essential = true
       portMappings = [
         {
-          containerPort = 443
-          hostPort      = 443
+          containerPort = 80
+          hostPort      = 80
         }
-      ]
+      ],
+      logConfiguration = {
+        logDriver = "awslogs",
+        options = {
+          awslogs-group         = var.awslogs_group,
+          awslogs-region        = var.region,
+          awslogs-stream-prefix = "ecs",
+          awslogs-create-group  = "true",
+          mode                  = "non-blocking",
+          max-buffer-size       = "25m"
+        }
+      }
     }
   ])
 
