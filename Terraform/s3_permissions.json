@@ -10,7 +10,7 @@
       "Resource": "arn:aws:s3:::yosefi-terraform-bucket",
       "Principal": {
         "AWS": [
-          "arn:aws:iam::340752809566:group/admin"
+          "arn:aws:iam::340752809566:user/sefi"
         ]
       }
     },
@@ -24,7 +24,7 @@
       "Resource": "arn:aws:s3:::yosefi-terraform-bucket/*",
       "Principal": {
         "AWS": [
-          "arn:aws:iam::340752809566:group/admin"
+          "arn:aws:iam::340752809566:user/sefi"
         ]
       }
     }
