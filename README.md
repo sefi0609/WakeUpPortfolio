@@ -20,13 +20,13 @@ The container is built using the following Dockerfile:
 ## **Infrastructure**
 The **Terraform** folder contains the infrastructure as code (IaC) setup to deploy the container on AWS.
 
-| File                                                 | Description                                                                                                           |
-|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| [backend.tf](Terraform/backend.tf)                   | Configure the Terraform **remote state file** using AWS S3                                                            |
-| [s3.tf](Terraform/s3.tf)                             | Provision an **S3 bucket** to store the Terraform state file                                                          |
-| [s3_permissions.json](Terraform/s3_permissions.json) | Defines the **bucket policy** for securing Terraform state storage                                                    |
-| [providers.tf](Terraform/providers.tf)               | Configures **Terraform providers** (AWS, etc.)                                                                        |
-| [main.tf](Terraform/main.tf)                         | Sets up an **ECR repository**, provisions the **ECS cluster**, defines the **task**, and configures the **scheduler** |
+| File                                                 | Description                                                                                                                                         |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [backend.tf](Terraform/backend.tf)                   | Configure the Terraform **remote state file** using AWS S3                                                                                          |
+| [s3.tf](Terraform/s3.tf)                             | Provision an **S3 bucket** to store the Terraform state file                                                                                        |
+| [s3_permissions.json](Terraform/s3_permissions.json) | Defines the **bucket policy** for securing Terraform state storage                                                                                  |
+| [providers.tf](Terraform/providers.tf)               | Configures **Terraform providers** (AWS, etc.)                                                                                                      |
+| [main.tf](Terraform/main.tf)                         | Sets up an **ECR repository**, provisions the **ECS cluster**, defines the **task**, configures the **scheduler**, and sends logs to **CloudWatch** |
 
 ### **Prerequisites for Deployment**
 - **AWS credentials** must be configured for Terraform.
