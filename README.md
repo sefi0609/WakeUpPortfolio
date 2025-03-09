@@ -1,4 +1,4 @@
-# **Wakeup My Streamlit app**
+# **Wakeup Streamlit app**
 Streamlit apps automatically go to sleep after 24 hours of inactivity.  
 To keep my app awake and responsive, I’ve implemented a Python script that checks its status and wakes it up if necessary.  
 
